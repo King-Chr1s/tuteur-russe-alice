@@ -1,0 +1,34 @@
+Собеседник — version Grok (avec relais)
+=======================================
+
+STRUCTURE (à garder telle quelle) :
+  index.html
+  netlify.toml
+  netlify/functions/grok.js
+
+DÉPLOIEMENT SUR NETLIFY (recommandé, gratuit)
+---------------------------------------------
+Option A — via GitHub (le plus fiable pour les fonctions) :
+  1. Crée un dépôt GitHub et dépose-y ces 3 fichiers (en gardant les dossiers).
+  2. Sur netlify.com > Add new site > Import from Git > choisis le dépôt.
+  3. Deploy (aucune commande de build nécessaire).
+  4. Site settings > Environment variables > Add : 
+        clé  = XAI_API_KEY
+        valeur = ta clé xAI (commence par xai-...)
+  5. Redéploie (Deploys > Trigger deploy) pour que la clé soit prise en compte.
+
+Option B — via Netlify CLI :
+  1. npm i -g netlify-cli
+  2. Dans le dossier : netlify deploy --prod
+  3. Ajoute XAI_API_KEY dans les variables d'environnement, puis redéploie.
+
+ENSUITE
+-------
+  - Ouvre l'URL du site sur le téléphone > Ajouter à l'écran d'accueil.
+  - La clé xAI vit côté serveur : rien à coller dans l'app.
+
+NOTE : l'aperçu dans Claude ne peut pas joindre le relais (/api/grok) ;
+c'est normal, ça ne répond qu'une fois le site déployé.
+
+Pour Vercel/Cloudflare le principe est le même mais le format de la fonction
+diffère — demande-moi si tu préfères l'un d'eux.

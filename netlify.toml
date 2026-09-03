@@ -1,0 +1,9 @@
+[build]
+  publish = "."
+  functions = "netlify/functions"
+
+# La page appelle /api/grok, redirigé vers la fonction relais
+[[redirects]]
+  from = "/api/grok"
+  to = "/.netlify/functions/grok"
+  status = 200
