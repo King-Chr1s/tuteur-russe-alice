@@ -338,14 +338,15 @@
 
       <div class="field-lab">Qualité d'Аня</div>
       <div class="opts" id="modelOpts">
-        <button class="opt sel" data-model="grok-4.3" data-def="1">Grok 4.3 <small>recommandé, dispo en UE</small></button>
-        <button class="opt" data-model="grok-4.5">Grok 4.5 <small>flagship, peut être indispo en UE</small></button>
+        <button class="opt sel" data-model="llama-3.3-70b-versatile" data-def="1">Llama 3.3 70B <small>qualité, multilingue</small></button>
+        <button class="opt" data-model="openai/gpt-oss-120b">GPT-OSS 120B <small>alternative solide</small></button>
+        <button class="opt" data-model="meta-llama/llama-4-scout-17b-16e-instruct">Llama 4 Scout <small>récent, rapide</small></button>
       </div>
 
-      <p class="keyhelp" style="margin-top:16px">Аня est reliée à <span class="keylink">Grok (xAI)</span> via ton relais. La clé reste côté serveur — rien à saisir ici.</p>
+      <p class="keyhelp" style="margin-top:16px">Аня est reliée à <span class="keylink">Groq</span> via ton relais. La clé reste côté serveur — rien à saisir ici.</p>
 
       <button class="start" id="startBtn">Начать разговор</button>
-      <p class="credit">Аня est une tutrice reliée à Grok (xAI) : elle corrige l'essentiel et garde la conversation fluide.</p>
+      <p class="credit">Аня est une tutrice reliée à Groq : elle corrige l'essentiel et garde la conversation fluide.</p>
     </div>
   </div>
 
@@ -441,10 +442,10 @@
   let streak={last:'',count:0,best:0};
   let revQueue=[], revI=0, revDir='rufr';
   let sessions=[], activeId=null, transcript=[];
-  let model='grok-4.3';
+  let model='llama-3.3-70b-versatile';
 
   /* ---------- Anthropic API helper ---------- */
-  // Appelle le relais (fonction serveur) qui garde la clé xAI cachée.
+  // Appelle le relais (fonction serveur) qui garde la clé Groq cachée.
   const RELAY_URL="/api/grok";
   async function callClaude(messages, system){
     const body={ model, max_tokens:1000, messages:[{role:"system",content:system}, ...messages] };
@@ -677,10 +678,10 @@ Format de sortie — réponds UNIQUEMENT avec un objet JSON valide, sans aucun t
     }catch(e){
       hideTyping();
       let m="Connexion interrompue. Vérifie ta connexion et renvoie ton message.";
-      if(e && (e.status===401||e.status===403)) m="Le relais a refusé la clé xAI. Vérifie la variable XAI_API_KEY côté hébergeur.";
+      if(e && (e.status===401||e.status===403)) m="Le relais a refusé la clé Groq. Vérifie la variable GROQ_API_KEY côté hébergeur.";
       else if(e && e.status===404) m="Relais introuvable. Cette version marche une fois déployée (elle ne répond pas dans l'aperçu).";
-      else if(e && e.status===429) m="Grok a reçu trop de demandes d'un coup. Attends un instant puis renvoie ton message.";
-      else if(e && e.status===500) m="Le relais n'a pas la clé xAI. Ajoute XAI_API_KEY dans les réglages de l'hébergeur.";
+      else if(e && e.status===429) m="Groq a reçu trop de demandes d'un coup. Attends un instant puis renvoie ton message.";
+      else if(e && e.status===500) m="Le relais n'a pas la clé Groq. Ajoute GROQ_API_KEY dans les réglages de l'hébergeur.";
       const err=document.createElement('div');
       err.className='row tutor';
       err.innerHTML='<div class="bubble err">'+m+'</div>';
@@ -1060,7 +1061,7 @@ Format de sortie — réponds UNIQUEMENT avec un objet JSON valide, sans aucun t
     var png=c.toDataURL('image/png');
     var at=document.createElement('link');at.rel='apple-touch-icon';at.href=png;document.head.appendChild(at);
     var fi=document.createElement('link');fi.rel='icon';fi.href=png;document.head.appendChild(fi);
-    var man={name:'Собеседник — russe avec Аня (Grok)',short_name:'Собеседник',description:'Un tuteur de russe chaleureux.',start_url:'.',scope:'.',display:'standalone',orientation:'portrait',background_color:'#F6E7ED',theme_color:'#3B2A3F',icons:[{src:png,sizes:'512x512',type:'image/png',purpose:'any maskable'}]};
+    var man={name:'Собеседник — russe avec Аня (Groq)',short_name:'Собеседник',description:'Un tuteur de russe chaleureux.',start_url:'.',scope:'.',display:'standalone',orientation:'portrait',background_color:'#F6E7ED',theme_color:'#3B2A3F',icons:[{src:png,sizes:'512x512',type:'image/png',purpose:'any maskable'}]};
     var mb=new Blob([JSON.stringify(man)],{type:'application/manifest+json'});
     var ml=document.createElement('link');ml.rel='manifest';ml.href=URL.createObjectURL(mb);document.head.appendChild(ml);
   }catch(e){}

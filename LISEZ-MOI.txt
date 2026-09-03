@@ -1,4 +1,4 @@
-Собеседник — version Grok (avec relais)
+Собеседник — version Groq (avec relais)
 =======================================
 
 STRUCTURE (à garder telle quelle) :
@@ -6,29 +6,26 @@ STRUCTURE (à garder telle quelle) :
   netlify.toml
   netlify/functions/grok.js
 
-DÉPLOIEMENT SUR NETLIFY (recommandé, gratuit)
----------------------------------------------
-Option A — via GitHub (le plus fiable pour les fonctions) :
-  1. Crée un dépôt GitHub et dépose-y ces 3 fichiers (en gardant les dossiers).
-  2. Sur netlify.com > Add new site > Import from Git > choisis le dépôt.
-  3. Deploy (aucune commande de build nécessaire).
-  4. Site settings > Environment variables > Add : 
-        clé  = XAI_API_KEY
-        valeur = ta clé xAI (commence par xai-...)
-  5. Redéploie (Deploys > Trigger deploy) pour que la clé soit prise en compte.
+TU AS DÉJÀ UN SITE NETLIFY DÉPLOYÉ ?
+------------------------------------
+1. Remplace tes fichiers par CEUX de ce nouveau dossier (garde les sous-dossiers).
+   - Via GitHub : remets ces fichiers dans le dépôt (écrase les anciens) et pousse.
+2. La clé : dans Netlify > ton site > Site configuration > Environment variables.
+   - Idéalement, nomme la variable  GROQ_API_KEY  avec ta clé Groq (gsk_...).
+   - Si tu as déjà créé XAI_API_KEY, tu peux la garder : mets-y la clé gsk_...
+     (le relais accepte les deux noms). Le plus propre reste GROQ_API_KEY.
+3. Deploys > Trigger deploy > Deploy site  (obligatoire pour prendre la clé).
 
-Option B — via Netlify CLI :
-  1. npm i -g netlify-cli
-  2. Dans le dossier : netlify deploy --prod
-  3. Ajoute XAI_API_KEY dans les variables d'environnement, puis redéploie.
+PREMIER DÉPLOIEMENT (si besoin) :
+  - netlify.com > Add new site > Import from Git > choisis le dépôt > Deploy.
+  - Puis étapes 2 et 3 ci-dessus.
 
-ENSUITE
--------
+ENSUITE :
   - Ouvre l'URL du site sur le téléphone > Ajouter à l'écran d'accueil.
-  - La clé xAI vit côté serveur : rien à coller dans l'app.
+  - La clé vit côté serveur : rien à coller dans l'app.
 
 NOTE : l'aperçu dans Claude ne peut pas joindre le relais (/api/grok) ;
 c'est normal, ça ne répond qu'une fois le site déployé.
 
-Pour Vercel/Cloudflare le principe est le même mais le format de la fonction
-diffère — demande-moi si tu préfères l'un d'eux.
+MODÈLE : par défaut llama-3.3-70b-versatile (bon en russe). Si Groq le retire
+un jour, l'app propose GPT-OSS 120B et Llama 4 Scout dans les réglages (⚙).
