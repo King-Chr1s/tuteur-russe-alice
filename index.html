@@ -446,7 +446,7 @@
 
   /* ---------- Anthropic API helper ---------- */
   // Appelle le relais (fonction serveur) qui garde la clé Groq cachée.
-  const RELAY_URL="/api/grok";
+  const RELAY_URL="/.netlify/functions/grok";
   async function callClaude(messages, system){
     const body={ model, max_tokens:1000, messages:[{role:"system",content:system}, ...messages] };
     const res=await fetch(RELAY_URL,{
